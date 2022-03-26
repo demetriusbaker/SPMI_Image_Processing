@@ -9,7 +9,7 @@ import org.opencv.imgproc.Imgproc;
 import java.util.Scanner;
 
 public class Lab3 {
-    public static String path = "E:\\Android_Development\\Java\\OpenCV\\src\\german_hens.jpg";
+    public static String path = "E:\\Android_Development\\Java\\Java_OpenCV\\src\\german_hens.jpg";
 
     static {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);

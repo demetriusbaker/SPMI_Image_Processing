@@ -28,7 +28,7 @@ public class Chapter4 {
                 CvUtils.COLOR_BLACK
         );
 
-        String path = "E:\\Android_Development\\Java\\OpenCV\\src\\com\\company\\mouse.jpg";
+        String path = "E:\\Android_Development\\Java\\Java_OpenCV\\src\\com\\company\\mouse.jpg";
 
         Mat matImg = Imgcodecs.imread(path);
         if (matImg.empty()) {

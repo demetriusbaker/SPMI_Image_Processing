@@ -120,7 +120,7 @@ public class CvUtilsFX extends Application {
         stage.setOnCloseRequest(windowEvent -> Platform.exit());
         stage.show();
 
-        Mat img = Imgcodecs.imread("E:\\Android_Development\\Java\\OpenCV\\src\\com\\company\\mouse.jpg");
+        Mat img = Imgcodecs.imread("E:\\Android_Development\\Java\\Java_OpenCV\\src\\com\\company\\mouse.jpg");
         if (img.empty()) {
             System.out.println("Не удалось загрузить изображение");
             return;

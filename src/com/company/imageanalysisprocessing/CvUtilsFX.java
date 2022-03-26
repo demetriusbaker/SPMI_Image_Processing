@@ -125,7 +125,7 @@ public class CvUtilsFX extends Application {
     }
 
     private void onClickButton(ActionEvent actionEvent) {
-        String path = "E:\\Android_Development\\Java\\OpenCV\\src\\com\\company\\mouse.jpg";
+        String path = "E:\\Android_Development\\Java\\Java_OpenCV\\src\\com\\company\\mouse.jpg";
         Mat img = Imgcodecs.imread(path);
         if (img.empty()) {
             System.out.println("OOOps, empty!");

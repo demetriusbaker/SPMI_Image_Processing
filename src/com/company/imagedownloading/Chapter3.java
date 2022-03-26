@@ -15,7 +15,7 @@ import java.awt.image.BufferedImage;
 import java.util.Arrays;
 
 public class Chapter3 {
-    public static String path = "E:\\Android_Development\\Java\\OpenCV\\src\\com\\company\\mouse.jpg";
+    public static String path = "E:\\Android_Development\\Java\\Java_OpenCV\\src\\com\\company\\mouse.jpg";
 
     private static boolean isRun = true;
     private static boolean isEnd = false;
@@ -90,7 +90,7 @@ public class Chapter3 {
         window.setContentPane(label);
         window.setVisible(true);
 
-        String path = "E:\\Android_Development\\Java\\OpenCV\\src\\com\\company\\video.mp4";
+        String path = "E:\\Android_Development\\Java\\Java_OpenCV\\src\\com\\company\\video.mp4";
         VideoCapture capture = new VideoCapture(path);
         if (!capture.isOpened()) {
             System.out.println("Failed open video");
