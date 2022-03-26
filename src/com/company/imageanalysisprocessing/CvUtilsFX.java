@@ -1,5 +1,6 @@
-package com.company;
+package com.company.imageanalysisprocessing;
 
+import com.company.imagedownloading.CvUtils;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -119,9 +120,7 @@ public class CvUtilsFX extends Application {
         Scene scene = new Scene(root, 400.0, 150.0);
         stage.setTitle("OpenCV " + Core.VERSION);
         stage.setScene(scene);
-        stage.setOnCloseRequest(windowEvent -> {
-            Platform.exit();
-        });
+        stage.setOnCloseRequest(windowEvent -> Platform.exit());
         stage.show();
     }
 

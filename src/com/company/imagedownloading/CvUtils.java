@@ -1,7 +1,8 @@
-package com.company;
+package com.company.imagedownloading;
 
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.Scalar;
 
 import javax.swing.*;
 import java.awt.image.BufferedImage;
@@ -10,6 +11,18 @@ import java.io.*;
 import java.util.Arrays;
 
 public class CvUtils {
+    public static final Scalar COLOR_BLACK = colorRGB(0, 0, 0);
+    public static final Scalar COLOR_WHITE = colorRGB(255, 255, 255);
+    public static final Scalar COLOR_RED = colorRGB(255, 0, 0);
+    public static final Scalar COLOR_BLUE = colorRGB(0, 0, 255);
+    public static final Scalar COLOR_GREEN = colorRGB(0, 128, 0);
+    public static final Scalar COLOR_YELLOW = colorRGB(255, 255, 0);
+    public static final Scalar COLOR_GRAY = colorRGB(128, 128, 128);
+
+    public static Scalar colorRGB(double red, double green, double blue) {
+        return new Scalar(blue, green, red);
+    }
+
     public static BufferedImage MatToBufferedImage(Mat m) {
         if (m == null || m.empty()) return null;
         if (m.depth() == CvType.CV_8U) {
