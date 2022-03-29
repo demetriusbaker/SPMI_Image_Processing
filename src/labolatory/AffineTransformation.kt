@@ -5,18 +5,24 @@ import org.opencv.imgproc.Imgproc
 
 
 class AffineTransformation(private var image: Mat) {
-    fun move(): Mat {
+    fun move(movingCoif: Double): Mat {
+        val p1 = Point(5.0, 5.0)
+        val p2 = Point(20.0, 5.0)
+        val p3 = Point(5.0, 20.0)
+
+        val p4 = Point(p1.x + movingCoif, p1.y + movingCoif)
+        val p5 = Point(p2.x + movingCoif, p2.y + movingCoif)
+        val p6 = Point(p3.x + movingCoif, p3.y + movingCoif)
+
+        val ma1 = MatOfPoint2f(p1, p2, p3)
+        val ma2 = MatOfPoint2f(p4, p5, p6)
+        val resMat = Imgproc.getAffineTransform(ma1, ma2)
+
         val changedImage = Mat()
 
-        Imgproc.warpAffine(
-            image,
-            image,
-            changedImage,
-            Size(
-                image.cols().toDouble(),
-                image.rows().toDouble()
-            )
-        )
+        val size = Size(image.cols().toDouble(), image.cols().toDouble())
+
+        Imgproc.warpAffine(image, changedImage, resMat, size)
         return changedImage
     }
 
@@ -51,7 +57,14 @@ class AffineTransformation(private var image: Mat) {
         return changedImage
     }
 
-    fun shift(): Mat {
+    fun shift(
+        point1: Double,
+        point2: Double,
+        point3: Double,
+        point4: Double,
+        point5: Double,
+        point6: Double,
+    ): Mat {
         val originalPoints = arrayOf(
             Point(0.0, 0.0),
             Point((image.cols() - 1).toDouble(), 0.0),
@@ -59,9 +72,9 @@ class AffineTransformation(private var image: Mat) {
         )
 
         val changedPoints = arrayOf(
-            Point(image.cols() * 0.0, image.rows() * 0.33),
-            Point(image.cols() * 0.85, image.rows() * 0.25),
-            Point(image.cols() * 0.15, image.rows() * 0.70)
+            Point(image.cols() * point1, image.rows() * point2),
+            Point(image.cols() * point3, image.rows() * point4),
+            Point(image.cols() * point5, image.rows() * point6)
         )
 
         val mofSrc = MatOfPoint2f(*originalPoints)
