@@ -60,6 +60,4 @@ public class Chapter5 {
         img.release();
         img2.release();
     }
-
-    // 160 / 312
 }

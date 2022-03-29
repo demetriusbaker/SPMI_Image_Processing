@@ -1,8 +1,7 @@
-package labolatory
+package laboratory
 
 import org.opencv.core.*
 import org.opencv.imgproc.Imgproc
-
 
 class AffineTransformation(private var image: Mat) {
     fun move(movingCoif: Double): Mat {
@@ -87,5 +86,4 @@ class AffineTransformation(private var image: Mat) {
 
         return warpAffineDst1
     }
-
 }

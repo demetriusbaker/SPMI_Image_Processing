@@ -3,7 +3,7 @@
 ### GStreamer Notice
 ```
 
-You are receiving a copy of GStreamer, Version: 1.18.4 in either source or
+You are receiving a copy of GStreamer, Version: 1.18.4 in either laboratory.source or
 object code in the JavaFX runtime or JavaFX SDK. The terms of the
 Oracle license do NOT apply to the GStreamer, Version: 1.18.4; it is
 licensed under the following license, separately from the Oracle programs
@@ -14,13 +14,13 @@ this library:
    - On Mac OS X systems: delete $(JAVA_HOME)/lib/libgstreamer-lite.dylib
    - On Windows systems: delete $(JAVA_HOME)\bin\gstreamer-lite.dll
 
-A copy of the Oracle modified GStreamer library source code is located
+A copy of the Oracle modified GStreamer library laboratory.source code is located
 in the following OpenJDK git repository:
 
    https://github.com/openjdk/jfx
 
 You can use git to clone the repository or you can browse the
-source using a web browser. The root directory of the GStreamer source
+laboratory.source using a web browser. The root directory of the GStreamer laboratory.source
 code is here:
 
    rt/modules/javafx.media/src/main/native/gstreamer/gstreamer-lite/
@@ -58,7 +58,7 @@ strategy to use in any particular case, based on the explanations below.
   When we speak of free software, we are referring to freedom of use,
 not price.  Our General Public Licenses are designed to make sure that
 you have the freedom to distribute copies of free software (and charge
-for this service if you wish); that you receive source code or can get
+for this service if you wish); that you receive laboratory.source code or can get
 it if you want it; that you can change the software and use pieces of
 it in new free programs; and that you are informed that you can do
 these things.
@@ -70,7 +70,7 @@ you if you distribute copies of the library or if you modify it.
 
   For example, if you distribute copies of the library, whether gratis
 or for a fee, you must give the recipients all the rights that we gave
-you.  You must make sure that they, too, receive or can get the source
+you.  You must make sure that they, too, receive or can get the laboratory.source
 code.  If you link other code with the library, you must provide
 complete object files to the recipients, so that they can relink them
 with the library after making changes to the library and recompiling
@@ -165,8 +165,8 @@ straightforwardly into another language.  (Hereinafter, translation is
 included without limitation in the term "modification".)
 
   "Source code" for a work means the preferred form of the work for
-making modifications to it.  For a library, complete source code means
-all the source code for all modules it contains, plus any associated
+making modifications to it.  For a library, complete laboratory.source code means
+all the laboratory.source code for all modules it contains, plus any associated
 interface definition files, plus the scripts used to control compilation
 and installation of the library.
 
@@ -179,7 +179,7 @@ writing it).  Whether that is true depends on what the Library does
 and what the program that uses the Library does.
 
   1. You may copy and distribute verbatim copies of the Library's
-complete source code as you receive it, in any medium, provided that
+complete laboratory.source code as you receive it, in any medium, provided that
 you conspicuously and appropriately publish on each copy an
 appropriate copyright notice and disclaimer of warranty; keep intact
 all the notices that refer to this License and to the absence of any
@@ -258,15 +258,15 @@ the Library into a program that is not a library.
   4. You may copy and distribute the Library (or a portion or
 derivative of it, under Section 2) in object code or executable form
 under the terms of Sections 1 and 2 above provided that you accompany
-it with the complete corresponding machine-readable source code, which
+it with the complete corresponding machine-readable laboratory.source code, which
 must be distributed under the terms of Sections 1 and 2 above on a
 medium customarily used for software interchange.
 
   If distribution of object code is made by offering access to copy
 from a designated place, then offering equivalent access to copy the
-source code from the same place satisfies the requirement to
-distribute the source code, even though third parties are not
-compelled to copy the source along with the object code.
+laboratory.source code from the same place satisfies the requirement to
+distribute the laboratory.source code, even though third parties are not
+compelled to copy the laboratory.source along with the object code.
 
   5. A program that contains no derivative of any portion of the
 Library, but is designed to work with the Library by being compiled or
@@ -282,7 +282,7 @@ Section 6 states terms for distribution of such executables.
 
   When a "work that uses the Library" uses material from a header file
 that is part of the Library, the object code for the work may be a
-derivative work of the Library even though the source code is not.
+derivative work of the Library even though the laboratory.source code is not.
 Whether this is true is especially significant if the work can be
 linked without the Library, or if the work is itself a library.  The
 threshold for this to be true is not precisely defined by law.
@@ -315,11 +315,11 @@ directing the user to the copy of this License.  Also, you must do one
 of these things:
 
     a) Accompany the work with the complete corresponding
-    machine-readable source code for the Library including whatever
+    machine-readable laboratory.source code for the Library including whatever
     changes were used in the work (which must be distributed under
     Sections 1 and 2 above); and, if the work is an executable linked
     with the Library, with the complete machine-readable "work that
-    uses the Library", as object code and/or source code, so that the
+    uses the Library", as object code and/or laboratory.source code, so that the
     user can modify the Library and then relink to produce a modified
     executable containing the modified Library.  (It is understood
     that the user who changes the contents of definitions files in the
@@ -350,7 +350,7 @@ of these things:
 Library" must include any data and utility programs needed for
 reproducing the executable from it.  However, as a special exception,
 the materials to be distributed need not include anything that is
-normally distributed (in either source or binary form) with the major
+normally distributed (in either laboratory.source or binary form) with the major
 components (compiler, kernel, and so on) of the operating system on
 which the executable runs, unless that component itself accompanies
 the executable.
@@ -497,7 +497,7 @@ redistribution under these terms (or, alternatively, under the terms of the
 ordinary General Public License).
 
   To apply these terms, attach the following notices to the library.  It is
-safest to attach them to the start of each source file to most effectively
+safest to attach them to the start of each laboratory.source file to most effectively
 convey the exclusion of warranty; and each file should have at least the
 "copyright" line and a pointer to where the full notice is found.
 

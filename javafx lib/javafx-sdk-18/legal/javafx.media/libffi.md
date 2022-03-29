@@ -4,7 +4,7 @@
 ```
 
 libffi - Copyright (c) 1996-2019  Anthony Green, Red Hat, Inc and others.
-See source files for details.
+See laboratory.source files for details.
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
