@@ -60,7 +60,7 @@ public class Lab3 {
         }
     }
 
-    // 1
+    // 1 чтение изображения
     private static Mat readImage() {
         try {
             System.out.println("Choose picture from this list:");
@@ -100,7 +100,7 @@ public class Lab3 {
         }
     }
 
-    // 2
+    // 2 вывод изображения на экран
     private static void outputImage(String title, Mat image) {
         try {
             HighGui.imshow(title, image);
@@ -110,7 +110,7 @@ public class Lab3 {
         }
     }
 
-    // 3
+    // 3 преобразование из RGB в Gray
     private static void convertRGB2GRAY() {
         try {
             Mat grayImage = new Mat();
@@ -125,7 +125,7 @@ public class Lab3 {
         }
     }
 
-    // 4
+    // 4 аффинные преобразования (перемещение; масштабирование; поворот; сдвиг)
     private static void doAffineTransformations() {
         try {
             AffineTransformation transformer = new AffineTransformation(sourceImage);
@@ -153,7 +153,7 @@ public class Lab3 {
         }
     }
 
-    // 4.1
+    // 4.1 перемещение
     private static void printMovingExample(AffineTransformation transformer) {
         int movingNumber;
 
@@ -166,7 +166,7 @@ public class Lab3 {
         changedImage = transformer.move(movingNumber);
     }
 
-    // 4.2
+    // 4.2 масштабирование
     private static void printScalingExample(AffineTransformation transformer) {
         double scale;
 
@@ -179,7 +179,7 @@ public class Lab3 {
         changedImage = transformer.scale(scale);
     }
 
-    // 4.3
+    // 4.3 поворот
     private static void printTurningExample(AffineTransformation transformer) {
         int flipCode;
 
@@ -220,7 +220,7 @@ public class Lab3 {
         }
     }
 
-    // 4.4
+    // 4.4 сдвиг
     private static void printShiftingExample(AffineTransformation transformer) {
         System.out.println("Print six values");
 
@@ -235,12 +235,12 @@ public class Lab3 {
         changedImage = transformer.shift(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5]);
     }
 
-    // 5
+    // 5 вывод преобразованного изображения на экран
     private static void outputChangedImage() {
         outputImage(windowTitle, changedImage);
     }
 
-    // 6
+    // 6 вывод каждого канала изображения на экран
     private static void outputEveryChannelImageOnScreen() {
         try {
             channelImages = new Mat[]{
@@ -266,7 +266,7 @@ public class Lab3 {
         }
     }
 
-    // 7
+    // 7 сохранение преобразованного изображения в заданной директории
     private static void saveProcessedImageInDirectory() {
         try {
             imageName = imageName.replace(sourcePath, "");
@@ -280,7 +280,7 @@ public class Lab3 {
         }
     }
 
-    // 8
+    // 8 сохранение каждого канала изображения в заданной директории
     private static void saveEveryChannelImageInDirectory() {
         try {
             String channel = "channel", jpg = ".jpg";
@@ -337,7 +337,7 @@ public class Lab3 {
             }
         }
 
-        outputImage("Inverse color image", mat);
+        outputImage("Changed channels", mat);
 
         return mat;
     }
