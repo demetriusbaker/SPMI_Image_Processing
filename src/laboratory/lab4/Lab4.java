@@ -10,7 +10,7 @@ import java.awt.*;
 import java.io.File;
 import java.util.Collections;
 
-public class ImageProcessing extends JFrame {
+public class Lab4 extends JFrame {
     static {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         System.out.println("Version - " + Core.VERSION);
@@ -205,9 +205,9 @@ public class ImageProcessing extends JFrame {
 
         // Create two separate lists: one for colors and one for channels (these will be used as separate datasets).
         Scalar[] colorsRgb = new Scalar[]{
-                new Scalar(200, 0, 0, 255),
-                new Scalar(0, 200, 0, 255),
-                new Scalar(0, 0, 200, 255)};
+                new Scalar(255, 0, 0, 255),
+                new Scalar(0, 255, 0, 255),
+                new Scalar(0, 0, 255, 255)};
         MatOfInt[] channels = new MatOfInt[]{
                 new MatOfInt(0),
                 new MatOfInt(1),
