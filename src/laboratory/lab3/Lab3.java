@@ -1,7 +1,6 @@
 package laboratory.lab3;
 
 import org.opencv.core.Core;
-import org.opencv.core.CvException;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfByte;
 import org.opencv.imgcodecs.Imgcodecs;
@@ -10,15 +9,17 @@ import org.opencv.imgproc.Imgproc;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.text.DecimalFormat;
+import java.util.Hashtable;
 
 public class Lab3 extends Frame {
     static {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
     }
 
-    private static final String interimPath = "src/laboratory/lab4/image.jpg";
+    private static final String interimPath = "src/laboratory/buffer.jpg";
 
-    private static final int width = 800, height = 600;
+    private static final int width = 1000, height = 700;
     private static final int imageWidth = 600, imageHeight = 500;
 
     private static final Mat[] channelImages = new Mat[3];
@@ -33,6 +34,8 @@ public class Lab3 extends Frame {
 
     private static Affine transformer;
 
+    private static boolean resized;
+
     public static void main(String[] args) {
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -46,6 +49,7 @@ public class Lab3 extends Frame {
         label.setVerticalAlignment(SwingConstants.CENTER);
         label.setHorizontalAlignment(SwingConstants.CENTER);
 
+        frame.getContentPane().setBackground(Color.BLACK);
         frame.getContentPane().add(label);
 
         JMenuBar mb = new JMenuBar() {
@@ -70,12 +74,7 @@ public class Lab3 extends Frame {
 
         JMenuItem move = new JMenuItem("Move");
         JMenuItem scale = new JMenuItem("Scale");
-
-        JMenu turn = new JMenu("Turning");
-        JMenuItem plusOne = new JMenuItem("+1");
-        JMenuItem zero = new JMenuItem("0");
-        JMenuItem minusOne = new JMenuItem("-1");
-
+        JMenuItem turn = new JMenuItem("Turning");
         JMenuItem shift = new JMenuItem("Shift");
 
         JMenuItem grayImage = new JMenuItem("Convert to gray");
@@ -101,10 +100,6 @@ public class Lab3 extends Frame {
         affineMenu.add(turn);
         affineMenu.add(shift);
 
-        turn.add(plusOne);
-        turn.add(zero);
-        turn.add(minusOne);
-
         colorMenu.add(grayImage);
         colorMenu.add(channels);
         colorMenu.add(everyChannel);
@@ -117,11 +112,7 @@ public class Lab3 extends Frame {
 
         move.addActionListener(e -> setMoving());
         scale.addActionListener(e -> setScaling());
-
-        plusOne.addActionListener(e -> setTurning(1));
-        zero.addActionListener(e -> setTurning(0));
-        minusOne.addActionListener(e -> setTurning(-1));
-
+        turn.addActionListener(e -> setTurning());
         shift.addActionListener(e -> setShifting());
 
         grayImage.addActionListener(e -> convertRGB2GRAY());
@@ -135,9 +126,16 @@ public class Lab3 extends Frame {
         FileDialog dialog = new FileDialog(frame, "Choose a file", FileDialog.LOAD);
         dialog.setVisible(true);
 
+        String directory = dialog.getDirectory();
+        String file = dialog.getFile();
+
+        if (directory == null || file == null) return;
+        if (!file.contains(".jpg")) return;
+
         try {
             sourceImage = Imgcodecs.imread(dialog.getDirectory() + dialog.getFile());
-            setImage(sourceImage);
+            resized = false;
+            setImage(sourceImage, true);
             setLockOtherMenu(false);
 
             imageName = dialog.getFile();
@@ -145,7 +143,7 @@ public class Lab3 extends Frame {
             convertedImage = null;
             transformer = new Affine(sourceImage);
             everyChannel.setEnabled(false);
-        } catch (CvException ignored) {
+        } catch (Exception ignored) {
         }
     }
 
@@ -192,7 +190,7 @@ public class Lab3 extends Frame {
 
         JPanel northPanel = new JPanel();
         northPanel.setLayout(new GridLayout(2, 2));
-        northPanel.add(new JLabel("Set from 1 to 100", SwingConstants.CENTER));
+        northPanel.add(new JLabel("Set from 0 to 100", SwingConstants.CENTER));
         northPanel.add(slider);
         jFrame.add(northPanel, BorderLayout.NORTH);
 
@@ -201,7 +199,7 @@ public class Lab3 extends Frame {
         button.addActionListener(e -> {
             int movingNumber = slider.getValue();
             convertedImage = initialiseNewMat(transformer.move(movingNumber));
-            setImage(convertedImage);
+            setImage(convertedImage, false);
         });
         southPanel.add(button);
         jFrame.add(southPanel, BorderLayout.SOUTH);
@@ -210,20 +208,31 @@ public class Lab3 extends Frame {
     private static void setScaling() {
         JFrame jFrame = new JFrame("Scale");
         jFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        jFrame.setPreferredSize(new Dimension(500, 200));
+        jFrame.setPreferredSize(new Dimension(500, 250));
         jFrame.pack();
         jFrame.setLocationRelativeTo(null);
         jFrame.setVisible(true);
 
-        JSlider slider = new JSlider(200, 2000, 200);
+        JSlider slider = new JSlider(400, 1400);
+        slider.setValue(1000);
         slider.setPaintTicks(true);
         slider.setPaintLabels(true);
         slider.setPaintTrack(true);
-        slider.setMajorTickSpacing(200);
+        Hashtable<Integer, JLabel> hashtable = new Hashtable<>();
+        int startI = 400;
+        double startD = 0.4;
+        while (startI <= 1400){
+            String scale = new DecimalFormat("#0.0").format(startD);
+            hashtable.put(startI, new JLabel(scale));
+            startI += 100;
+            startD += 0.1;
+        }
+        slider.setLabelTable(hashtable);
+        slider.setPaintLabels(true);
 
         JPanel northPanel = new JPanel();
         northPanel.setLayout(new GridLayout(2, 2));
-        String text = "Set from 200 to 2000 (default: 1000)";
+        String text = "Set from 0.4 to 1.4 (default: 1.0)";
         northPanel.add(new JLabel(text, SwingConstants.CENTER));
         northPanel.add(slider);
         jFrame.add(northPanel, BorderLayout.NORTH);
@@ -233,15 +242,42 @@ public class Lab3 extends Frame {
         button.addActionListener(e -> {
             double scale = slider.getValue() / 1000.0;
             convertedImage = initialiseNewMat(transformer.scale(scale));
-            setImage(convertedImage, (int) (imageWidth * scale), (int) (imageHeight * scale));
+            setImage(convertedImage, scale);
         });
         southPanel.add(button);
         jFrame.add(southPanel, BorderLayout.SOUTH);
     }
 
-    private static void setTurning(int flipCode) {
-        convertedImage = initialiseNewMat(transformer.turn(flipCode));
-        setImage(convertedImage);
+    private static void setTurning() {
+        JFrame jFrame = new JFrame("Turn");
+        jFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        jFrame.setPreferredSize(new Dimension(500, 200));
+        jFrame.pack();
+        jFrame.setLocationRelativeTo(null);
+        jFrame.setVisible(true);
+
+        JSlider slider = new JSlider(0, 90, 1);
+        slider.setPaintTicks(true);
+        slider.setPaintLabels(true);
+        slider.setPaintTrack(true);
+        slider.setMinorTickSpacing(5);
+        slider.setMajorTickSpacing(10);
+
+        JPanel northPanel = new JPanel();
+        northPanel.setLayout(new GridLayout(2, 2));
+        northPanel.add(new JLabel("Set from 0 to 90°", SwingConstants.CENTER));
+        northPanel.add(slider);
+        jFrame.add(northPanel, BorderLayout.NORTH);
+
+        JPanel southPanel = new JPanel();
+        JButton button = new JButton("Confirm");
+        button.addActionListener(e -> {
+            int movingNumber = slider.getValue();
+            convertedImage = initialiseNewMat(transformer.turn(movingNumber));
+            setImage(convertedImage, false);
+        });
+        southPanel.add(button);
+        jFrame.add(southPanel, BorderLayout.SOUTH);
     }
 
     private static void setShifting() {
@@ -254,10 +290,10 @@ public class Lab3 extends Frame {
 
         JTextField textField = new JTextField();
         textField.setHorizontalAlignment(JTextField.CENTER);
-        textField.setText("0.6|0.5|0.6|0.4|0.4|0.3");
+        textField.setText("0.2 0.3");
         JPanel northPanel = new JPanel();
         northPanel.setLayout(new GridLayout(2, 2));
-        String text = "Set pattern like: 0.6|0.5|0.6|0.4|0.4|0.3";
+        String text = "Set pattern like: 0.2 0.3";
         northPanel.add(new JLabel(text, SwingConstants.CENTER));
         northPanel.add(textField);
         jFrame.add(northPanel, BorderLayout.NORTH);
@@ -266,12 +302,11 @@ public class Lab3 extends Frame {
         JButton button = new JButton("Confirm");
         button.addActionListener(e -> {
             try {
-                String[] slice = textField.getText().split("\\|");
-                Double[] arr = new Double[6];
-                for (int i = 0; i < arr.length; i++)
-                    arr[i] = Double.parseDouble(slice[i]);
-                convertedImage = initialiseNewMat(transformer.shift(arr));
-                setImage(convertedImage);
+                String[] number = textField.getText().split(" ");
+                double x = Double.parseDouble(number[0]);
+                double y = Double.parseDouble(number[1]);
+                convertedImage = initialiseNewMat(transformer.shift(x, y));
+                setImage(convertedImage, false);
             } catch (Exception exception) {
                 JOptionPane.showMessageDialog(
                         null,
@@ -293,7 +328,7 @@ public class Lab3 extends Frame {
 
         convertedImage = initialiseNewMat(grayImage);
 
-        setImage(convertedImage);
+        setImage(convertedImage, false);
     }
 
     private static void buildChannels(JMenuItem everyChannel) {
@@ -358,12 +393,23 @@ public class Lab3 extends Frame {
             otherJMenuItem.setEnabled(!lock);
     }
 
-    private static void setImage(Mat image) {
+    private static void setImage(Mat image, boolean downloadMode) {
         MatOfByte buf = new MatOfByte();
         Imgcodecs.imencode(".jpg", image, buf);
 
         ImageIcon ic = new ImageIcon(buf.toArray());
-        ic = new ImageIcon(ic.getImage().getScaledInstance(imageWidth, imageHeight, Image.SCALE_DEFAULT));
+
+        if (downloadMode || resized) {
+            int realWidth = image.width(), realHeight = image.height();
+            while (realWidth > imageWidth || realHeight > imageHeight){
+                realWidth /= 2;
+                realHeight /= 2;
+                resized = true;
+            }
+
+            ic = new ImageIcon(ic.getImage().getScaledInstance(realWidth, realHeight, Image.SCALE_DEFAULT));
+        } else
+            ic = new ImageIcon(ic.getImage().getScaledInstance(image.width(), image.height(), Image.SCALE_DEFAULT));
 
         label.setIcon(ic);
 
@@ -371,12 +417,23 @@ public class Lab3 extends Frame {
         frame.pack();
     }
 
-    private static void setImage(Mat image, int width, int height) {
+    private static void setImage(Mat image, double scale) {
         MatOfByte buf = new MatOfByte();
         Imgcodecs.imencode(".jpg", image, buf);
 
         ImageIcon ic = new ImageIcon(buf.toArray());
-        ic = new ImageIcon(ic.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
+
+        if (resized) {
+            int realWidth = image.width(), realHeight = image.height();
+            while (realWidth > imageWidth * scale || realHeight > imageHeight * scale){
+                realWidth /= 2;
+                realHeight /= 2;
+                resized = true;
+            }
+
+            ic = new ImageIcon(ic.getImage().getScaledInstance(realWidth, realHeight, Image.SCALE_DEFAULT));
+        } else
+            ic = new ImageIcon(ic.getImage().getScaledInstance(image.width(), image.height(), Image.SCALE_DEFAULT));
 
         label.setIcon(ic);
 

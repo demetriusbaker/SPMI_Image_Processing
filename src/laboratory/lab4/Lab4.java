@@ -16,7 +16,7 @@ public class Lab4 extends JFrame {
         System.out.println("Version - " + Core.VERSION);
     }
 
-    private static final String interimPath = "src/laboratory/lab4/image.jpg";
+    private static final String interimPath = "src/laboratory";
 
     private static final int width = 800, height = 600;
     private static final int imageWidth = 600, imageHeight = 500;
@@ -64,7 +64,15 @@ public class Lab4 extends JFrame {
         JMenuItem saveImage = new JMenuItem("Save image");
         JMenuItem exit = new JMenuItem("Exit");
 
-        JMenuItem preparation = new JMenuItem("Preparation");
+        JMenu preparation = new JMenu("Preparation");
+        JMenuItem aPreparation = new JMenuItem("Prepare like A");
+        JMenuItem bPreparation = new JMenuItem("Prepare like B");
+        JMenuItem cPreparation = new JMenuItem("Prepare like C");
+        JMenuItem dPreparation = new JMenuItem("Prepare like D");
+        JMenuItem ePreparation = new JMenuItem("Prepare like E");
+        JMenuItem fPreparation = new JMenuItem("Prepare like F");
+        JMenuItem gPreparation = new JMenuItem("Prepare like G");
+        JMenuItem hPreparation = new JMenuItem("Prepare like H");
         JMenuItem gauss = new JMenuItem("Gauss");
         JMenuItem canny = new JMenuItem("Canny");
 
@@ -85,6 +93,14 @@ public class Lab4 extends JFrame {
         menu.add(exit);
 
         realiseMenu.add(preparation);
+        preparation.add(aPreparation);
+        preparation.add(bPreparation);
+        preparation.add(cPreparation);
+        preparation.add(dPreparation);
+        preparation.add(ePreparation);
+        preparation.add(fPreparation);
+        preparation.add(gPreparation);
+        preparation.add(hPreparation);
         realiseMenu.add(gauss);
         realiseMenu.add(canny);
 
@@ -96,7 +112,14 @@ public class Lab4 extends JFrame {
         saveImage.addActionListener(e -> saveImage());
         exit.addActionListener(e -> exit());
 
-        preparation.addActionListener(e -> prepare());
+        aPreparation.addActionListener(e -> prepare(1));
+        bPreparation.addActionListener(e -> prepare(2));
+        cPreparation.addActionListener(e -> prepare(3));
+        dPreparation.addActionListener(e -> prepare(4));
+        ePreparation.addActionListener(e -> prepare(5));
+        fPreparation.addActionListener(e -> prepare(6));
+        gPreparation.addActionListener(e -> prepare(7));
+        hPreparation.addActionListener(e -> prepare(8));
         gauss.addActionListener(e -> toGauss());
         canny.addActionListener(e -> toCanny());
 
@@ -167,8 +190,32 @@ public class Lab4 extends JFrame {
     }
 
     // TODO: preparing, gauss, canny and fucking masks!!!
-    private static void prepare() {
-
+    private static void prepare(int code) {
+        switch (code) {
+            case 1:
+                System.out.println();
+                break;
+            case 2:
+                System.out.println();
+                break;
+            case 3:
+                System.out.println();
+                break;
+            case 4:
+                System.out.println();
+                break;
+            case 5:
+                System.out.println();
+                break;
+            case 6:
+                System.out.println();
+                break;
+            case 7:
+                System.out.println();
+                break;
+            default:
+                break;
+        }
     }
 
     private static void toGauss() {
@@ -176,10 +223,15 @@ public class Lab4 extends JFrame {
     }
 
     private static void toCanny() {
-        Mat img = new Mat(sourceImage.size(), sourceImage.type());
-        Imgproc.Canny(sourceImage, img, 2, 2);
+        Mat dst = new Mat();
+        Mat gray = new Mat();
+        Mat image = new Mat();
 
-        convertedImage = initialiseNewMat(img);
+        Imgproc.GaussianBlur(sourceImage, dst, new Size(3, 3), 5, 5);
+        Imgproc.cvtColor(dst, gray, Imgproc.COLOR_BGR2GRAY);
+        Imgproc.Canny(gray, image, 0, 0, 3, false);
+
+        convertedImage = initialiseNewMat(image);
 
         setImage(convertedImage);
     }
@@ -253,7 +305,9 @@ public class Lab4 extends JFrame {
             }
         }
 
-        showHistogramWindow(title, histMatBitmap);
+        Mat loh = new Mat();
+        Imgproc.cvtColor(histMatBitmap, loh, Imgproc.COLOR_RGB2GRAY);
+        showHistogramWindow(title, loh);
     }
 
     private static void showHistogramWindow(String title, Mat mat) {
