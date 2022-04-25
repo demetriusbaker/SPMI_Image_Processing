@@ -307,7 +307,7 @@ public class Lab4 extends JFrame {
 
         Mat loh = new Mat();
         Imgproc.cvtColor(histMatBitmap, loh, Imgproc.COLOR_RGB2GRAY);
-        showHistogramWindow(title, loh);
+        showHistogramWindow(title, histMatBitmap);
     }
 
     private static void showHistogramWindow(String title, Mat mat) {

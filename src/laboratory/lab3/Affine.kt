@@ -30,7 +30,7 @@ class Affine(private var image: Mat) {
 
         val changedImage = Mat()
 
-        val size = Size(image.width() + movingCoif, image.height() + movingCoif)
+        val size = Size(image.width() + abs(movingCoif), image.height() + abs(movingCoif))
         Imgproc.warpAffine(image, changedImage, resMat, size)
         return changedImage
     }
@@ -68,9 +68,7 @@ class Affine(private var image: Mat) {
         var imgMat: Mat? = null
         val width = sourceImg.width
         val height = sourceImg.height
-        if (dataBuffer is DataBufferByte) {
-            imgPixels = dataBuffer.data
-        }
+        if (dataBuffer is DataBufferByte) imgPixels = dataBuffer.data
         if (dataBuffer is DataBufferInt) {
             val byteSize = width * height
             imgPixels = ByteArray(byteSize * 3)
