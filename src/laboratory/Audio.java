@@ -84,7 +84,7 @@ public class Audio {
 
     }
 
-    //стоп
+    // стоп
     public void stop() {
 
         clip.stop();
