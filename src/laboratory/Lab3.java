@@ -39,6 +39,8 @@ public class Lab3 extends Frame {
 
     private static Tools tools;
 
+    private static final MessageError messageError = new MessageError();
+
     public static void main(String[] args) {
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -154,32 +156,15 @@ public class Lab3 extends Frame {
         String fileName = directory + file;
 
         if (directory == null || file == null) {
-            JOptionPane.showMessageDialog(
-                    null,
-                    "You didn't choose anything jpeg file!\n",
-                    "Choose jpeg image",
-                    JOptionPane.INFORMATION_MESSAGE
-            );
+            messageError.getNotChosenMessage(true);
             return;
         }
         if (!file.contains(extension)) {
-            JOptionPane.showMessageDialog(
-                    null,
-                    "The file of wrong extension!\n" +
-                            "Check please extension!",
-                    "Extension error",
-                    JOptionPane.ERROR_MESSAGE
-            );
+            messageError.getIncorrectExtensionMessage(true);
             return;
         }
         if (!(tools.isValidISOLatin1(fileName))) {
-            JOptionPane.showMessageDialog(
-                    null,
-                    "The name of file is wrong!\n" +
-                            "Please check name and use only latin alphabet!",
-                    "Name error",
-                    JOptionPane.ERROR_MESSAGE
-            );
+            messageError.getNotValidNameMessage(true);
             return;
         }
 
@@ -214,6 +199,7 @@ public class Lab3 extends Frame {
             String savedDirectory = dialog.getDirectory() + dialog.getFile();
             Imgcodecs.imwrite(savedDirectory, mat);
         } catch (Exception ignored) {
+            messageError.getNotSavedMessage(true);
         }
     }
 
@@ -478,8 +464,3 @@ public class Lab3 extends Frame {
         tools.setImage(convertedImage, false);
     }
 }
-
-/*
-Жёстко надристал
-полный файл кода!
- */

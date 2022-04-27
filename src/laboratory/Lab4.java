@@ -27,7 +27,7 @@ public class Lab4 extends JFrame {
 
     private static Tools tools;
 
-    private static Audio audio;
+    private static final MessageError messageError = new MessageError();
 
     public static void main(String[] args) {
         frame = new JFrame();
@@ -144,30 +144,9 @@ public class Lab4 extends JFrame {
             try {
                 buildHistograms(convertedImage);
             } catch (NullPointerException exception) {
-                audio = new Audio("src\\laboratory\\raw\\oh-shit-iam-sorry.wav", 0.8);
-                audio.sound();
-
-                String title = "Processing error";
-                String errorMessage = "You should to apply any changes for this picture, " +
-                        "then you can build histograms!";
-                JOptionPane.showMessageDialog(
-                        null,
-                        exception + "!\n" + errorMessage,
-                        title,
-                        JOptionPane.ERROR_MESSAGE
-                );
+                messageError.getNoneExistMessage(exception, true);
             } catch (CvException cvException) {
-                audio = new Audio("src\\laboratory\\raw\\fuck-you1.wav", 0.8);
-                audio.sound();
-
-                JOptionPane.showMessageDialog(
-                        null,
-                        "What's the hell?!\n" +
-                                cvException + "\n" +
-                                cvException.getMessage() + "\n",
-                        "Oh shit error",
-                        JOptionPane.ERROR_MESSAGE
-                );
+                messageError.getUnknownErrorMessage(cvException, true);
             }
         });
     }
@@ -181,41 +160,15 @@ public class Lab4 extends JFrame {
         String fileName = directory + file;
 
         if (directory == null || file == null) {
-            audio = new Audio("src\\laboratory\\raw\\attention.wav", 0.8);
-            audio.sound();
-
-            JOptionPane.showMessageDialog(
-                    null,
-                    "You didn't choose anything jpeg file!\n",
-                    "Choose jpeg image",
-                    JOptionPane.INFORMATION_MESSAGE
-            );
+            messageError.getNotChosenMessage(true);
             return;
         }
         if (!file.contains(extension)) {
-            audio = new Audio("src\\laboratory\\raw\\oh-shit-iam-sorry.wav", 0.8);
-            audio.sound();
-
-            JOptionPane.showMessageDialog(
-                    null,
-                    "The file of wrong extension!\n" +
-                            "Check please extension!",
-                    "Extension error",
-                    JOptionPane.ERROR_MESSAGE
-            );
+            messageError.getIncorrectExtensionMessage(true);
             return;
         }
         if (!(tools.isValidISOLatin1(fileName))) {
-            audio = new Audio("src\\laboratory\\raw\\woo.wav", 1.0);
-            audio.sound();
-
-            JOptionPane.showMessageDialog(
-                    null,
-                    "The name of file is wrong!\n" +
-                            "Please check name and use only latin alphabet!",
-                    "Name error",
-                    JOptionPane.ERROR_MESSAGE
-            );
+            messageError.getNotValidNameMessage(true);
             return;
         }
 
