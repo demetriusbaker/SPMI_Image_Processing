@@ -88,7 +88,6 @@ public class Lab4 extends JFrame {
         JMenuItem menuSigma = new JMenuItem("Change sigmaX");
         JMenuItem menuThreshold1 = new JMenuItem("Change threshold 1");
         JMenuItem menuThreshold2 = new JMenuItem("Change threshold 2");
-        JMenuItem menuApertureSize = new JMenuItem("Change aperture size");
         JMenuItem menuTeeth = new JMenuItem("Change teeth count");
 
         JMenuItem[] otherJMenuItems = new JMenuItem[]{
@@ -135,7 +134,6 @@ public class Lab4 extends JFrame {
         parametersMenu.add(menuSigma);
         parametersMenu.add(menuThreshold1);
         parametersMenu.add(menuThreshold2);
-        parametersMenu.add(menuApertureSize);
         parametersMenu.add(menuTeeth);
 
         tools = new Tools(
@@ -176,7 +174,7 @@ public class Lab4 extends JFrame {
         });
         canny.addActionListener(e -> {
             try {
-                convertedImage = Realisation.toCanny(sourceImage, p.size, p.threshold1, p.threshold2, p.apertureSize);
+                convertedImage = Realisation.toCanny(sourceImage, p.size, p.threshold1, p.threshold2);
                 tools.setImage(convertedImage, false);
             } catch (Exception exception) {
                 message.getParametersErrorMessage(p, true);
@@ -199,7 +197,6 @@ public class Lab4 extends JFrame {
         menuSigma.addActionListener(e -> p.setSigmaX());
         menuThreshold1.addActionListener(e -> p.setThreshold1());
         menuThreshold2.addActionListener(e -> p.setThreshold2());
-        menuApertureSize.addActionListener(e -> p.setApertureSize());
         menuTeeth.addActionListener(e -> p.setTooth());
     }
 

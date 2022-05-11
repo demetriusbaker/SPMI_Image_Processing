@@ -1,70 +1,53 @@
 package com.company.useful_tools;
 
-import org.opencv.core.*;
 import org.opencv.core.Point;
+import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Collections;
 
 public class Histograms {
     public static void build(Mat image, String imageName, String extension) {
-        Size imageSize = image.size();
+        String path = "src\\com\\company\\image.jpg";
+        Imgcodecs.imwrite(path, image);
+        Mat mat = Imgcodecs.imread(path);
 
-        // Set the amount of bars in the histogram.
-        int histSize = 256;
-        MatOfInt histogramSize = new MatOfInt(histSize);
+        Mat mGray = new Mat();
+        Imgproc.cvtColor(mat, mGray, Imgproc.COLOR_RGB2GRAY);
+        double[] arrG;
+        double[] mass = new double[500];
+        for (int i = 0; i <= 255; i++) {
+            mass[i] = 0;
+        }
+        double sum = 0;
+        for (int i = 0; i < mGray.rows(); i++) {
+            for (int j = 0; j < mGray.cols(); j++) {
+                arrG = mGray.get(i, j);
 
-        // Set the height of the histogram and width of the bar.
-        int histogramHeight = (int) imageSize.height;
-        int binWidth = 5;
-
-        // Set the value range.
-        MatOfFloat histogramRange = new MatOfFloat(0f, 256f);
-
-        // Create two separate lists: one for colors and one for channels (these will be used as separate datasets).
-        Scalar grayScalar = new Scalar(127, 127, 127, 127);
-        MatOfInt matOfInt = new MatOfInt(0);
-
-        // Create an array to be saved in the histogram and a second array, on which the histogram chart will be drawn.
-        Mat hist = new Mat();
-        Mat histMatBitmap = new Mat(imageSize, image.type());
-
-        Imgproc.calcHist(
-                Collections.singletonList(image),
-                matOfInt,
-                new Mat(),
-                hist,
-                histogramSize, histogramRange
-        );
-        Core.normalize(hist, hist, histogramHeight, 0, Core.NORM_INF);
-        for (int j = 0; j < histSize; j++) {
-            Point p1 = new Point(
-                    binWidth * (j - 1),
-                    histogramHeight - Math.round(hist.get(j - 1, 0)[0])
+                mass[(int) arrG[0]]++;
+                sum = sum + arrG[0];
+            }
+        }
+        double max = mass[0];
+        for (int i = 0; i <= 255; i++) {
+            if (max < mass[i]) max = mass[i];
+        }
+        Mat img1 = new Mat(600, 600, CvType.CV_8UC3, new Scalar(255, 255, 255));
+        for (int i = 0; i <= 256; i++) {
+            Imgproc.line(
+                    img1,
+                    new Point(i + 10, 600),
+                    new Point(i + 10, 600 - mass[i] / max * 550),
+                    new Scalar(0),
+                    1,
+                    Imgproc.LINE_AA,
+                    0
             );
-            Point p2 = new Point(
-                    binWidth * j,
-                    histogramHeight - Math.round(hist.get(j, 0)[0])
-            );
-            Imgproc.line(histMatBitmap, p1, p2, grayScalar, 2, 8, 0);
         }
 
-        for (int j = 0; j < histSize; j++) {
-            Point p1 = new Point(
-                    binWidth * (j - 1),
-                    histogramHeight - Math.round(hist.get(j - 1, 0)[0])
-            );
-            Point p2 = new Point(
-                    binWidth * j,
-                    histogramHeight - Math.round(hist.get(j, 0)[0])
-            );
-            Imgproc.line(histMatBitmap, p1, p2, grayScalar, 2, 8, 0);
-        }
-
-        show(histMatBitmap, imageName, extension);
+        show(img1, imageName, extension);
     }
 
     private static void show(Mat mat, String imageName, String extension) {
